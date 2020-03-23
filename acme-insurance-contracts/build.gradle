@@ -1,0 +1,17 @@
+springBoot {
+    mainClassName = 'com.acme.services.InsuranceContractApplication'
+    version = '1.0.0'
+}
+
+dependencies {
+    compile project(":acme-commons")
+    compile project(":acme-products-api")
+    compile project(":acme-insurance-fees-api")
+
+    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    api 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.postgresql:postgresql:42.2.11'
+    compile 'io.springfox:springfox-swagger2:2.9.2'
+    compile 'io.springfox:springfox-swagger-ui:2.9.2'
+    //runtime 'com.h2database:h2:1.4.200'
+}

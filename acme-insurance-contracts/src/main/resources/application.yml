@@ -1,0 +1,33 @@
+server:
+  port: 8082
+
+---
+spring:
+  profiles: default
+
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/contracts
+    username: acme
+    password: acme
+    driver-class-name: org.postgresql.Driver
+
+logging:
+  level:
+    com.acme: DEBUG
+
+app:
+  client:
+    get-products-url: http://localhost:8080/products
+    get-product-url: http://localhost:8080/products/by
+    get-fees-url: http://localhost:8081/fees
+    get-fee-url: http://localhost:8081/fees/by

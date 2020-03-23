@@ -1,0 +1,8 @@
+bootJar.enabled = false
+jar.enabled = true
+
+dependencies {
+    api 'org.jetbrains.kotlin:kotlin-reflect'
+    api 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    api 'org.springframework.boot:spring-boot-starter-web'
+}

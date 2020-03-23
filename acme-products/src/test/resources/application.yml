@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+---
+spring:
+  profiles: test
+
+  jpa:
+    database: H2
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: jdbc:h2:mem:decent
+    username: decent
+    password: decent
+    driver-class-name: org.h2.Driver
+
+logging:
+  level:
+    com.acme: DEBUG
