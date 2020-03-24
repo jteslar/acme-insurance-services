@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import springfox.documentation.builders.PathSelectors
 import springfox.documentation.builders.RequestHandlerSelectors
-import springfox.documentation.service.AuthorizationScope
 import springfox.documentation.service.BasicAuth
 import springfox.documentation.service.SecurityReference
 import springfox.documentation.service.SecurityScheme
@@ -40,7 +39,6 @@ class SwaggerConfig {
     }
 
     private fun defaultAuth(): SecurityReference {
-        val authorizationScope = AuthorizationScope("global", "accessEverything");
-        return SecurityReference("basicAuth", arrayOf(authorizationScope))
+        return SecurityReference("basicAuth", arrayOf())
     }
 }

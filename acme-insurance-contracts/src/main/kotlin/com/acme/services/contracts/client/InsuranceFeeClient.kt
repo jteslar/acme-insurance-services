@@ -20,7 +20,7 @@ class InsuranceFeeClient {
     fun getAll(): List<InsuranceFeeResponse> =
         restTemplate.getForObject(feesUrl, Array<InsuranceFeeResponse>::class.java).toList()
 
-    fun findByCategoryAndValue(category: String, value: Long): InsuranceFeeResponse =
+    fun getByCategoryAndValue(category: String, value: Long): InsuranceFeeResponse =
         restTemplate.getForObject("$feeUrl?category={category}&value={value}", InsuranceFeeResponse::class.java, category, value)
             ?: throw BadRequestException("Insurance fee for $category not found")
 }

@@ -7,7 +7,9 @@ dependencies {
     compile project(":acme-commons")
     compile project(":acme-insurance-fees-api")
 
-    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'org.postgresql:postgresql:42.2.11'
-    //runtime 'com.h2database:h2:1.4.200'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.h2database:h2:1.4.200'
 }

@@ -67,6 +67,7 @@ class InsuranceContractController {
         logger.info("Insurance contracts uploaded [size = ${contracts.size}]")
     }
 
+    @Transactional
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     fun create(
@@ -76,7 +77,7 @@ class InsuranceContractController {
         logger.info("Creating insurance contract [$contract]")
 
         val product: ProductResponse = productClient.getByName(contract.productName!!)
-        val fee: InsuranceFeeResponse = insuranceFeeClient.findByCategoryAndValue(product.category, contract.declaredValue!!)
+        val fee: InsuranceFeeResponse = insuranceFeeClient.getByCategoryAndValue(product.category, contract.declaredValue!!)
 
         var newContract: InsuranceContract = calculateInsuranceFee(contract.toDomain().apply { userId = auth.name.toLong() }, product, fee)
         newContract = repository.save(newContract)
@@ -85,6 +86,7 @@ class InsuranceContractController {
         return newContract
     }
 
+    @Transactional
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     fun delete(

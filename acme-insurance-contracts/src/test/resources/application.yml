@@ -1,0 +1,28 @@
+server:
+  port: 8082
+
+---
+spring:
+  profiles: test
+
+  jpa:
+    database: H2
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: jdbc:h2:mem:decent
+    username: decent
+    password: decent
+    driver-class-name: org.h2.Driver
+
+logging:
+  level:
+    com.acme: DEBUG
+
+app:
+  client:
+    get-products-url: http://localhost:8080/products
+    get-product-url: http://localhost:8080/products/by
+    get-fees-url: http://localhost:8081/fees
+    get-fee-url: http://localhost:8081/fees/by

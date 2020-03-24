@@ -1,6 +1,6 @@
-package com.acme.services.products
+package com.acme.services.fees
 
-import com.acme.services.products.validation.ProductValidator
+import com.acme.services.fees.validation.InsuranceFeeValidator
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks
@@ -21,14 +21,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 @RunWith(SpringRunner::class)
 @WebMvcTest
 @ActiveProfiles("test")
-class ProductControllerTest {
+class InsuranceFeeControllerTest {
 
     @TestConfiguration
-    internal class ProductValidatorTestContextConfiguration {
+    internal class InsuranceFeeValidatorTestContextConfiguration {
 
         @Bean
-        fun productValidator(): ProductValidator {
-            return ProductValidator()
+        fun insuranceFeeValidator(): InsuranceFeeValidator {
+            return InsuranceFeeValidator()
         }
     }
 
@@ -36,36 +36,24 @@ class ProductControllerTest {
     private lateinit var mockMvc: MockMvc
 
     @MockBean
-    private lateinit var repository: ProductRepository
+    private lateinit var repository: InsuranceFeeRepository
 
     @InjectMocks
-    private lateinit var controller: ProductController
+    private lateinit var controller: InsuranceFeeController
 
-    private val emptyProducts = "Product Name;Category"
-    private val wrongProducts = "Product Name;Category\nproduct"
-    private val correctProducts = "Product Name;Category\nproduct;category"
+    private val emptyFees = "Category;Lim_low;Lim_Top;Fee"
+    private val wrongFees = "Category;Lim_low;Lim_Top;Fee\ncategory;0;10;0,5\ncategory;ss;10;0,5"
+    private val correctFees = "Category;Lim_low;Lim_Top;Fee\ncategory;0;10;0,5"
 
     private fun newFile(content: String): MockMultipartFile = MockMultipartFile("file", "fees.csv", "text/csv", content.toByteArray())
-    private fun newPdfFile(content: String): MockMultipartFile = MockMultipartFile("file", "fees.csv", "text/pdf", content.toByteArray())
-
-    @Test
-    fun `upload with wron ContentType fails`() {
-
-        mockMvc.perform(
-            MockMvcRequestBuilders
-                .multipart("/products/upload")
-                .file(newPdfFile(emptyProducts))
-        )
-            .andExpect(MockMvcResultMatchers.status().is4xxClientError)
-    }
 
     @Test
     fun `upload an empty file is ok`() {
 
         mockMvc.perform(
             MockMvcRequestBuilders
-                .multipart("/products/upload")
-                .file(newFile(emptyProducts))
+                .multipart("/fees/upload")
+                .file(newFile(emptyFees))
         )
             .andExpect(MockMvcResultMatchers.status().isOk)
 
@@ -77,8 +65,8 @@ class ProductControllerTest {
 
         mockMvc.perform(
             MockMvcRequestBuilders
-                .multipart("/products/upload")
-                .file(newFile(wrongProducts))
+                .multipart("/fees/upload")
+                .file(newFile(wrongFees))
         )
             .andExpect(MockMvcResultMatchers.status().is4xxClientError)
     }
@@ -88,11 +76,20 @@ class ProductControllerTest {
 
         mockMvc.perform(
             MockMvcRequestBuilders
-                .multipart("/products/upload")
-                .file(newFile(correctProducts))
+                .multipart("/fees/upload")
+                .file(newFile(correctFees))
         )
             .andExpect(MockMvcResultMatchers.status().isOk)
 
-        Mockito.verify(repository).saveAll(listOf(Product(name = "product", category = "category")))
+        Mockito.verify(repository).saveAll(
+            listOf(
+                InsuranceFee(
+                    productCategory = "category",
+                    limitLow = 0,
+                    limitTop = 10,
+                    feePercentage = 0.5
+                )
+            )
+        )
     }
 }

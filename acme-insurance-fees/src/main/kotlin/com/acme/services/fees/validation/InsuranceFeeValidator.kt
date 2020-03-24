@@ -3,7 +3,6 @@ package com.acme.services.fees.validation
 import com.acme.services.commons.exceptions.BadRequestException
 import com.acme.services.commons.utils.toNumber
 import com.acme.services.commons.utils.toPercentage
-import com.acme.services.commons.utils.toUnlimitedNumber
 import com.acme.services.fees.InsuranceFee
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -22,7 +21,7 @@ class InsuranceFeeValidator {
             return InsuranceFee(
                 productCategory = feeProperties[0],
                 limitLow = feeProperties[1].toNumber(),
-                limitTop = feeProperties[2].toUnlimitedNumber(),
+                limitTop = if (feeProperties[2] == "unlimited") null else feeProperties[2].toNumber(),
                 feePercentage = feeProperties[3].toPercentage()
             )
         } catch (e: Exception) {

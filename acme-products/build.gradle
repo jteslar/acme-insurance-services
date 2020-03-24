@@ -7,7 +7,7 @@ dependencies {
     compile project(":acme-commons")
     compile project(":acme-products-api")
 
-    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile 'org.postgresql:postgresql:42.2.11'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
