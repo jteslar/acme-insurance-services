@@ -20,7 +20,7 @@ class InsuranceFeeRepositoryTest {
     private lateinit var repository: InsuranceFeeRepository
 
     @Test
-    fun `create and find product by category and value`() {
+    fun `create and find insurance fee by category and value`() {
 
         val fee = InsuranceFee(productCategory = "category", limitLow = 0, limitTop = 10, feePercentage = 0.5)
         repository.save(fee)

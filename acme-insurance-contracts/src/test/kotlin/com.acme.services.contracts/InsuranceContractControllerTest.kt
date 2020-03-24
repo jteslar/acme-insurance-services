@@ -93,7 +93,7 @@ class InsuranceContractControllerTest {
 
     @WithMockUser("1")
     @Test
-    fun `upload a correct file an calculatefee`() {
+    fun `upload a correct file an calculate fee`() {
 
         Mockito.`when`(productClient.getAll()).thenReturn(mapOf("product" to product))
         Mockito.`when`(insuranceFeeClient.getAll()).thenReturn(listOf(fee1, fee2))
